@@ -37,7 +37,7 @@ public class QueryHelperTest {
 
     @Test
     public void testusuario(){
-        em.addUser("Carlos","Carlos@gmail.com","12345");
+        em.addUser("Juan","Juan@gmail.com","12345");
 //        Assert.assertTrue(em.login("email","12345"));
        /* Assert.assertEquals("SELECT * FROM User",
                 QueryHelper.createSELECT(new User(12, "ENGINYERIA TELEMÀTICA")));*/

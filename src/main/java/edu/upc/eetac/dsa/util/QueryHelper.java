@@ -12,18 +12,18 @@ public class QueryHelper {
 
         sb.append("id");
         for (String field : fields) {
-            if (!field.contains("id")) {
+//            if (!field.contains("id")) {
                 sb.append(", ").append(field);
-            }
+//            }
         }
 
 
         sb.append(") VALUES (?");
 
         for (String field : fields) {
-            if (!field.contains("id")) {
+//            if (!field.contains("id")) {
                 sb.append(", ?");
-            }
+//            }
         }
 
         sb.append(")");

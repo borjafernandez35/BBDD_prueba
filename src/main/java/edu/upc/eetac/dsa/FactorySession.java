@@ -43,7 +43,7 @@ public class FactorySession {
         while (rs.next()){
             System.out.println(rs.getObject(1)+ " " +  rs.getObject(2));
         }*/
-      con.createStatement().execute("DELETE FROM user");
+//      con.createStatement().execute("DELETE FROM user");
     }
 
 }
