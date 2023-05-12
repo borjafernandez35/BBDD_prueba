@@ -3,6 +3,7 @@ package edu.upc.eetac.dsa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FactorySession {
@@ -21,7 +22,7 @@ public class FactorySession {
         Connection conn = null;
         try {
             conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/test?" +
+                    DriverManager.getConnection("jdbc:mariadb://localhost:3306/dsadb?" +
                             "user=root&password=29041986");
 
         } catch (SQLException ex) {
@@ -33,8 +34,16 @@ public class FactorySession {
         return conn;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Connection con = getConnection();
-        con.createStatement().execute("INSERT INTO  ")
+      /*con.createStatement().execute("INSERT INTO user (id,name) VALUES(8,'Nil' ) ");
+        con.createStatement().execute("INSERT INTO user (id,name) VALUES(9,'Jose' ) ");*/
+       /* ResultSet rs = con.createStatement().executeQuery("SELECT * FROM user");
+        System.out.println(rs);
+        while (rs.next()){
+            System.out.println(rs.getObject(1)+ " " +  rs.getObject(2));
+        }*/
+      con.createStatement().execute("DELETE FROM user");
     }
+
 }

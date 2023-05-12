@@ -8,17 +8,22 @@ public class QueryHelper {
         sb.append(entity.getClass().getSimpleName()).append(" ");
         sb.append("(");
 
-        String [] fields = ObjectHelper.getFields(entity);
+        String[] fields = ObjectHelper.getFields(entity);
 
-        sb.append("ID");
-        for (String field: fields) {
-            sb.append(", ").append(field);
+        sb.append("id");
+        for (String field : fields) {
+            if (!field.contains("id")) {
+                sb.append(", ").append(field);
+            }
         }
+
 
         sb.append(") VALUES (?");
 
-        for (String field: fields) {
-            sb.append(", ?");
+        for (String field : fields) {
+            if (!field.contains("id")) {
+                sb.append(", ?");
+            }
         }
 
         sb.append(")");
@@ -34,4 +39,10 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    public static String createSELECT(Object entity) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+        return sb.toString();
+
+    }
 }

@@ -2,12 +2,14 @@ package edu.upc.eetac.dsa;
 
 import edu.upc.eetac.dsa.model.Deparment;
 import edu.upc.eetac.dsa.model.Employee;
+import edu.upc.eetac.dsa.model.User;
 import edu.upc.eetac.dsa.util.QueryHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class QueryHelperTest {
 
+    IEmployeeDAO em = EmployeeDAOImpl.getInstance();
 
     @Test
     public void testQueryINSERT() {
@@ -31,6 +33,14 @@ public class QueryHelperTest {
     public void testQuerySELECT2() {
         Assert.assertEquals("SELECT * FROM Deparment WHERE ID = ?",
                 QueryHelper.createQuerySELECT(new Deparment("ENTEL", "ENGINYERIA TELEMÀTICA")));
+    }
+
+    @Test
+    public void testusuario(){
+        em.addUser("Carlos","Carlos@gmail.com","12345");
+//        Assert.assertTrue(em.login("email","12345"));
+       /* Assert.assertEquals("SELECT * FROM User",
+                QueryHelper.createSELECT(new User(12, "ENGINYERIA TELEMÀTICA")));*/
     }
 
 }

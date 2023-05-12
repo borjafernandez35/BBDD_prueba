@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IEmployeeDAO {
 
+    public int addUser ( String name, String email, String password );
+
     public int addEmployee(String name, String surname, double salary);
     public Employee getEmployee(int employeeID);
     public void updateEmployee(int employeeID, String name, String surname, double salary);

@@ -1,11 +1,41 @@
 package edu.upc.eetac.dsa;
 
 import edu.upc.eetac.dsa.model.Employee;
+import edu.upc.eetac.dsa.model.User;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class EmployeeDAOImpl implements IEmployeeDAO {
+
+    private static IEmployeeDAO instance;
+
+    public static IEmployeeDAO getInstance(){
+        if (instance==null) instance = new EmployeeDAOImpl();
+        return instance;
+    }
+
+    public int addUser ( String name, String email, String password){
+
+        Session session = null;
+        int userID = 0;
+        try {
+            session = FactorySession.openSession();
+            User u = new User(name, email, password);
+            session.save(u);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return userID;
+
+    }
+
+
 
 
     public int addEmployee(String name, String surname, double salary) {
