@@ -5,13 +5,13 @@ import edu.upc.eetac.dsa.IEmployeeDAO;
 
 public class User {
 
-    int id;
+   private int id;
 
-    String name;
+  private  String name;
 
-    String email;
+   private String email;
 
-    String password;
+  private  String password;
 
 
 
@@ -32,8 +32,8 @@ public class User {
     }
 
     public User(String name, String email, String password) {
-        IEmployeeDAO id = EmployeeDAOImpl.getInstance();
-        this.id = id.addUser(name, email, password);
+        /*IEmployeeDAO id = EmployeeDAOImpl.getInstance();
+        this.id = id.addUser(name, email, password);*/
         this.name = name;
         this.email=email;
         this.password=password;

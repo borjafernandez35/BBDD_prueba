@@ -10,20 +10,22 @@ public class QueryHelper {
 
         String[] fields = ObjectHelper.getFields(entity);
 
+
+
         sb.append("id");
         for (String field : fields) {
-//            if (!field.contains("id")) {
+            if (!field.contains("id")) {
                 sb.append(", ").append(field);
-//            }
+           }
         }
 
 
         sb.append(") VALUES (?");
 
         for (String field : fields) {
-//            if (!field.contains("id")) {
+          if (!field.contains("id")) {
                 sb.append(", ?");
-//            }
+           }
         }
 
         sb.append(")");
@@ -34,7 +36,7 @@ public class QueryHelper {
     public static String createQuerySELECT(Object entity) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
-        sb.append(" WHERE ID = ?");
+        sb.append(" WHERE EMAIL = ?");
 
         return sb.toString();
     }

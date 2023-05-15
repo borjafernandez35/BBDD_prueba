@@ -35,6 +35,11 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
 
     }
 
+    public boolean login (String email, String password){
+        return false;
+
+    }
+
 
 
 

@@ -28,8 +28,11 @@ public class SessionImpl implements Session {
            pstm.setObject(1, 0);
             int i = 2;
 
-            for (String field: ObjectHelper.getFields(entity)) {
-                pstm.setObject(i++, ObjectHelper.getter(entity, field));
+            String[] fields=ObjectHelper.getFields(entity);
+            for (String field: fields) {
+                if(!field.equals("id")) {
+                    pstm.setObject(i++, ObjectHelper.getter(entity, field));
+                }
             }
 
             pstm.executeQuery();

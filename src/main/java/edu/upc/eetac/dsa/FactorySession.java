@@ -38,12 +38,12 @@ public class FactorySession {
         Connection con = getConnection();
       /*con.createStatement().execute("INSERT INTO user (id,name) VALUES(8,'Nil' ) ");
         con.createStatement().execute("INSERT INTO user (id,name) VALUES(9,'Jose' ) ");*/
-       /* ResultSet rs = con.createStatement().executeQuery("SELECT * FROM user");
+        /*ResultSet rs = con.createStatement().executeQuery("SELECT * FROM user");
         System.out.println(rs);
         while (rs.next()){
-            System.out.println(rs.getObject(1)+ " " +  rs.getObject(2));
+            System.out.println(rs.getObject(1)+ " " +  rs.getObject(2) + " " +  rs.getObject(3) + " " +  rs.getObject(4));
         }*/
-//      con.createStatement().execute("DELETE FROM user");
+    con.createStatement().execute("DELETE FROM user");
     }
 
 }
