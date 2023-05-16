@@ -4,6 +4,7 @@ import edu.upc.eetac.dsa.model.User;
 import edu.upc.eetac.dsa.util.ObjectHelper;
 import edu.upc.eetac.dsa.util.QueryHelper;
 
+import java.beans.IntrospectionException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,14 @@ public class SessionImpl implements Session {
             ResultSetMetaData rsmd  = rs.getMetaData();
 
             if (rs.next()){
+                int k= rsmd.getColumnCount();
+
+                for(int v; v=<k; v++){
+
+                        ObjectHelper.setter(entity, pk, value);
+
+
+                }
                 System.out.println(rs.getObject(1));
                 System.out.println(rs.getObject(2));
                 System.out.println(rs.getObject(3));
@@ -86,7 +95,7 @@ public class SessionImpl implements Session {
                 //                ObjectHelper.setter(entity,"name" )
             }
 
-        } catch (SQLException e) {
+        }  catch (SQLException | IntrospectionException e) {
             e.printStackTrace();
         }
 
