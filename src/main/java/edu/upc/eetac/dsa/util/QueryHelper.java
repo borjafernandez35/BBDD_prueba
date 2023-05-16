@@ -33,10 +33,10 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECT(Object entity) {
+    public static String createQuerySELECT(Object entity, String pk) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
-        sb.append(" WHERE EMAIL = ?");
+        sb.append(" WHERE "+pk+" = ?");
 
         return sb.toString();
     }

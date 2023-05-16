@@ -3,15 +3,21 @@ package edu.upc.eetac.dsa;
 import edu.upc.eetac.dsa.model.Employee;
 import edu.upc.eetac.dsa.model.User;
 
+
 import java.util.HashMap;
 import java.util.List;
 
-public class EmployeeDAOImpl implements IEmployeeDAO {
 
-    private static IEmployeeDAO instance;
 
-    public static IEmployeeDAO getInstance(){
-        if (instance==null) instance = new EmployeeDAOImpl();
+public class UserDAOImpl implements IUserDAO {
+
+    private static IUserDAO instance;
+
+
+    protected List<User> users;
+
+    public static IUserDAO getInstance(){
+        if (instance==null) instance = new UserDAOImpl();
         return instance;
     }
 
@@ -36,10 +42,62 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
     }
 
     public boolean login (String email, String password){
-        return false;
+        Session session = null;
+        int userID = 0;
+        User usuario = null;
+        try {
+            session = FactorySession.openSession();
+            if (usuario.getEmail().equals(email)){
+                usuario = usuario;
+            }
+            User u = new User(email, password);
+            session.save(u);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return true;
 
     }
+    public int size() {return 0;}
 
+        /*try{
+            String sql = "SELECT count(*) FROM ventas_clientes";
+            pst =connect().prepareStatement(sql);
+            rst = pst.executeQuery();
+        }catch(Exception e){
+            System.err.println("Error" + e);
+        }
+        if(rst == null){
+            lblncomp.setText(num);
+        }else{
+            try{
+                String sql = "SELECT ncomp FROM ventas_clientes";
+                pst =connect().prepareStatement(sql);
+                rs = pst.executeQuery();
+                while(rs.next()){
+                    ncomp = rs.getString("ncomp");
+                    entero = Integer.parseInt(ncomp);
+                    total = entero +1;
+                    total2 = Integer.toString(total);
+                }
+                lblncomp.setText(total2);
+            }catch(Exception e){
+                System.err.println("Error" + e);
+            }
+        }
+    }
+       *//* int ret = this.users.size();
+       Log logger;
+        logger.info("size " + ret);
+
+        return ret;*//*
+    }
+*/
 
 
 
@@ -77,6 +135,24 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
         }
 
         return employee;
+    }
+
+    @Override
+    public User getUser(int userID) {
+        Session session = null;
+        User user = null;
+        try {
+            session = FactorySession.openSession();
+            user = (User) session.get(User.class, userID);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return user;
     }
 
 
@@ -153,6 +229,31 @@ public class EmployeeDAOImpl implements IEmployeeDAO {
             session.close();
         }
         return employeeList;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Session session = null;
+        User user = null;
+        try {
+            session = FactorySession.openSession();
+            user = (User) session.get(User.class, "email", email);
+            // select * from user where email = ?
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return user;
+
+    }
+
+    login(email, pass) {
+        User use r= getUserByEmail();
+        user.getEmail.
     }
 
 

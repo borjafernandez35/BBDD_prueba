@@ -1,8 +1,5 @@
 package edu.upc.eetac.dsa.model;
 
-import edu.upc.eetac.dsa.EmployeeDAOImpl;
-import edu.upc.eetac.dsa.IEmployeeDAO;
-
 public class User {
 
    private int id;
@@ -31,6 +28,12 @@ public class User {
         this.password = password;
     }
 
+    public User(){}
+    public User(String email, String password){
+        this.email=email;
+        this.password=password;
+
+    }
     public User(String name, String email, String password) {
         /*IEmployeeDAO id = EmployeeDAOImpl.getInstance();
         this.id = id.addUser(name, email, password);*/

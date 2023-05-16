@@ -1,11 +1,10 @@
 package edu.upc.eetac.dsa;
 
+import edu.upc.eetac.dsa.model.User;
 import edu.upc.eetac.dsa.util.ObjectHelper;
 import edu.upc.eetac.dsa.util.QueryHelper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,9 +18,11 @@ public class SessionImpl implements Session {
 
     public void save(Object entity) {
 
+
         String insertQuery = QueryHelper.createQueryINSERT(entity);
 
         PreparedStatement pstm = null;
+
 
         try {
             pstm = conn.prepareStatement(insertQuery);
@@ -46,8 +47,53 @@ public class SessionImpl implements Session {
     public void close() {
 
     }
+    public Object get(Class theClass, int ID) throws InstantiationException, IllegalAccessException {
+        return get(theClass, "id", ID);
+    }
 
-    public Object get(Class theClass, int ID) {
+    public Object get(Class theClass, String pk, Object value) throws InstantiationException, IllegalAccessException {
+
+        Object entity = theClass.newInstance();
+        String selectQuery = QueryHelper.createQuerySELECT(entity, pk);
+
+        PreparedStatement pstm = null;
+        ResultSet rs= null;
+
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, value);
+
+            rs=pstm.executeQuery();
+            ResultSetMetaData rsmd  = rs.getMetaData();
+
+            if (rs.next()){
+                System.out.println(rs.getObject(1));
+                System.out.println(rs.getObject(2));
+                System.out.println(rs.getObject(3));
+                System.out.println(rs.getObject(4));
+
+                System.out.println(rsmd.getColumnCount());
+                System.out.println(rsmd.getColumnName(1));
+                System.out.println(rsmd.getColumnName(2));
+                System.out.println(rsmd.getColumnName(3));
+                System.out.println(rsmd.getColumnName(4));
+
+                System.out.println(rsmd.getColumnType(1));
+                System.out.println(rsmd.getColumnType(2));
+                System.out.println(rsmd.getColumnType(3));
+                System.out.println(rsmd.getColumnType(4));
+
+                //                ObjectHelper.setter(entity,"name" )
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public User getPorEmail(User user, String email) {
         return null;
     }
 
