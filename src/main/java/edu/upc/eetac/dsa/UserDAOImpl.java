@@ -238,6 +238,7 @@ public class UserDAOImpl implements IUserDAO {
         try {
             session = FactorySession.openSession();
             user = (User) session.get(User.class, "email", email);
+
             // select * from user where email = ?
         }
         catch (Exception e) {
@@ -251,10 +252,10 @@ public class UserDAOImpl implements IUserDAO {
 
     }
 
-    login(email, pass) {
+  /*  login(email, pass) {
         User use r= getUserByEmail();
         user.getEmail.
-    }
+    }*/
 
 
 }

@@ -69,30 +69,22 @@ public class SessionImpl implements Session {
 
             if (rs.next()){
                 int k= rsmd.getColumnCount();
-
-                for(int v; v=<k; v++){
-
-                        ObjectHelper.setter(entity, pk, value);
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++){
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                  //  ObjectHelper.setter(entity, pk, value);
+                    ObjectHelper.setter(entity, columnName, valueRow);
 
 
                 }
-                System.out.println(rs.getObject(1));
-                System.out.println(rs.getObject(2));
-                System.out.println(rs.getObject(3));
-                System.out.println(rs.getObject(4));
 
-                System.out.println(rsmd.getColumnCount());
-                System.out.println(rsmd.getColumnName(1));
-                System.out.println(rsmd.getColumnName(2));
-                System.out.println(rsmd.getColumnName(3));
-                System.out.println(rsmd.getColumnName(4));
+                return entity;
 
-                System.out.println(rsmd.getColumnType(1));
-                System.out.println(rsmd.getColumnType(2));
-                System.out.println(rsmd.getColumnType(3));
-                System.out.println(rsmd.getColumnType(4));
-
-                //                ObjectHelper.setter(entity,"name" )
+              //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+              //  ObjectHelper.setter(entity,"email" ,"a");
+              // ObjectHelper.setter(entity,"password" ,"a");
             }
 
         }  catch (SQLException | IntrospectionException e) {
