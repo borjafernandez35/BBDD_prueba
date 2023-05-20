@@ -9,8 +9,10 @@ public class ORMTest {
     @Test
     public void getUserTest() {
         IUserDAO userDAO = new UserDAOImpl();
-        User user5 = userDAO.getUser(61);
-        Assert.assertEquals("Cristian", user5.getName());
+       /* User user5 = userDAO.getUser(61);
+        Assert.assertEquals("Cristian", user5.getEmail());*/
+        User user2 = userDAO.getUser(76);
+        Assert.assertEquals("Javi", user2.getEmail());
     }
 
     public void getUserTest2() {

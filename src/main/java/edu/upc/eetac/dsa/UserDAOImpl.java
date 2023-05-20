@@ -251,10 +251,10 @@ public class UserDAOImpl implements IUserDAO {
 
     }
 
-    login(email, pass) {
+   /* login(email, pass) {
         User use r= getUserByEmail();
         user.getEmail.
-    }
+    }*/
 
 
 }

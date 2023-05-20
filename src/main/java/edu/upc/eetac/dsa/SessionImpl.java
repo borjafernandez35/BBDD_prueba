@@ -68,14 +68,17 @@ public class SessionImpl implements Session {
             ResultSetMetaData rsmd  = rs.getMetaData();
 
             if (rs.next()){
+
                 int k= rsmd.getColumnCount();
 
-                for(int v; v=<k; v++){
+                for(int v=1; v<=k; v++){
 
-                        ObjectHelper.setter(entity, pk, value);
+                        ObjectHelper.setter(entity, rsmd.getColumnName(v), rs.getObject(v) );
 
 
                 }
+
+
                 System.out.println(rs.getObject(1));
                 System.out.println(rs.getObject(2));
                 System.out.println(rs.getObject(3));
@@ -92,14 +95,17 @@ public class SessionImpl implements Session {
                 System.out.println(rsmd.getColumnType(3));
                 System.out.println(rsmd.getColumnType(4));
 
-                //                ObjectHelper.setter(entity,"name" )
+                return entity;
+
+                              // ObjectHelper.setter(entity,pk, value );
             }
 
-        }  catch (SQLException | IntrospectionException e) {
+      }  catch (SQLException | IntrospectionException   e) {
             e.printStackTrace();
         }
 
         return null;
+
     }
 
     public User getPorEmail(User user, String email) {
