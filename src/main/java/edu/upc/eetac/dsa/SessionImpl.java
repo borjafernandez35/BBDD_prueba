@@ -7,6 +7,7 @@ import edu.upc.eetac.dsa.util.QueryHelper;
 import java.beans.IntrospectionException;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -121,10 +122,94 @@ public class SessionImpl implements Session {
     }
 
     public List<Object> findAll(Class theClass) {
-        return null;
+
+        List list= new LinkedList();
+        try {
+            Object entity = theClass.newInstance();
+            String selectQuery = QueryHelper.createSELECT(entity);
+
+            PreparedStatement pstm = null;
+            ResultSet rs= null;
+
+
+            pstm = conn.prepareStatement(selectQuery);
+
+//            pstm.setObject(1, entity);
+
+            rs=pstm.executeQuery();
+            ResultSetMetaData rsmd  = rs.getMetaData();
+
+            while (rs.next()){
+                int k= rsmd.getColumnCount();
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++) {
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                    //  ObjectHelpter.setter(entity, pk, value);
+                    ObjectHelper.setter(entity, columnName, valueRow);
+                }
+                list.add(entity);
+
+
+            }
+
+            //return entity;
+
+            //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+            //  ObjectHelper.setter(entity,"email" ,"a");
+            // ObjectHelper.setter(entity,"password" ,"a");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            throw new RuntimeException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        return list;
     }
 
     public List<Object> findAll(Class theClass, HashMap params) {
+        /*Object entity = theClass.newInstance();
+        String selectQuery = QueryHelper.createSELECT(entity);
+
+        PreparedStatement pstm = null;
+        ResultSet rs= null;
+
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, value);
+
+            rs=pstm.executeQuery();
+            ResultSetMetaData rsmd  = rs.getMetaData();
+
+            if (rs.next()){
+
+                int k= rsmd.getColumnCount();
+
+                for(int v=1; v<=k; v++){
+
+                    ObjectHelper.setter(entity, rsmd.getColumnName(v), rs.getObject(v) );
+
+
+                }
+
+
+
+                return null;
+
+                // ObjectHelper.setter(entity,pk, value );
+            }
+
+        }  catch (SQLException | IntrospectionException   e) {
+            e.printStackTrace();
+        }*/
+
         return null;
     }
 

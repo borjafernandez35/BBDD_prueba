@@ -5,6 +5,7 @@ import edu.upc.eetac.dsa.model.User;
 
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -43,15 +44,16 @@ public class UserDAOImpl implements IUserDAO {
 
     public boolean login (String email, String password){
         Session session = null;
-        int userID = 0;
         User usuario = null;
         try {
             session = FactorySession.openSession();
-            if (usuario.getEmail().equals(email)){
-                usuario = usuario;
+            usuario= getUserByEmail(email);
+            if (usuario.getEmail().equals(email)&(usuario.getPassword().equals(password))){
+                return true;
             }
-            User u = new User(email, password);
-            session.save(u);
+            return false;
+            /*User u = new User(email, password);
+            session.save(u);*/
         }
         catch (Exception e) {
             // LOG
@@ -60,7 +62,7 @@ public class UserDAOImpl implements IUserDAO {
             session.close();
         }
 
-        return true;
+        return false;
 
     }
     public int size() {return 0;}
@@ -153,6 +155,25 @@ public class UserDAOImpl implements IUserDAO {
         }
 
         return user;
+    }
+
+    public List<Object> getAll() {
+        Session session = null;
+        List listUser = new LinkedList();
+        try {
+            session = FactorySession.openSession();
+            listUser =  session.findAll(User.class);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        System.out.println(listUser);
+
+
+        return listUser;
     }
 
 
@@ -251,9 +272,17 @@ public class UserDAOImpl implements IUserDAO {
 
     }
 
-   /* login(email, pass) {
-        User use r= getUserByEmail();
-        user.getEmail.
+ /* public boolean login(String email, String password) {
+
+        User user= getUserByEmail(email);
+        if((user!=null)&(user.getPassword()==password)){
+
+            return true;
+
+       }
+
+        return false;
+
     }*/
 
 
