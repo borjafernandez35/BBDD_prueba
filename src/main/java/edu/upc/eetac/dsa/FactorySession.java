@@ -21,8 +21,7 @@ public class FactorySession {
     private static Connection getConnection() {
         Connection conn = null;
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mariadb://localhost:3306/dsadb?" +
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/dsadb?" +
                             "user=root&password=29041986");
 
         } catch (SQLException ex) {
@@ -43,7 +42,7 @@ public class FactorySession {
         while (rs.next()){
             System.out.println(rs.getObject(1)+ " " +  rs.getObject(2) + " " +  rs.getObject(3) + " " +  rs.getObject(4));
         }*/
-    con.createStatement().execute("DELETE FROM user");
+    con.createStatement().execute("INSERT INTO user (id,name,email,password) values (0,'Jose','jose@gmail.com','123')");
     }
 
 }

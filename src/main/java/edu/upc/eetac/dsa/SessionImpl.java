@@ -71,10 +71,13 @@ public class SessionImpl implements Session {
             if (rs.next()){
 
                 int k= rsmd.getColumnCount();
-
-                for(int v=1; v<=k; v++){
-
-                        ObjectHelper.setter(entity, rsmd.getColumnName(v), rs.getObject(v) );
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++){
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                  //  ObjectHelper.setter(entity, pk, value);
+                    ObjectHelper.setter(entity, columnName, valueRow);
 
 
                 }
@@ -98,7 +101,11 @@ public class SessionImpl implements Session {
 
                 return entity;
 
-                              // ObjectHelper.setter(entity,pk, value );
+
+              //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+              //  ObjectHelper.setter(entity,"email" ,"a");
+              // ObjectHelper.setter(entity,"password" ,"a");
+
             }
 
       }  catch (SQLException | IntrospectionException   e) {
@@ -140,6 +147,8 @@ public class SessionImpl implements Session {
             ResultSetMetaData rsmd  = rs.getMetaData();
 
             while (rs.next()){
+                entity = theClass.newInstance();
+
                 int k= rsmd.getColumnCount();
                 String columnName;
                 Object valueRow=null;

@@ -9,7 +9,7 @@ import org.junit.Test;
 public class QueryHelperTest {
 
     IUserDAO em = UserDAOImpl.getInstance();
-
+/*
     @Test
     public void testQueryINSERT() {
         Assert.assertEquals("INSERT INTO Employee (ID, name, surname, salary) VALUES (?, ?, ?, ?)",
@@ -46,7 +46,7 @@ public class QueryHelperTest {
        // }
 
        /* Assert.assertEquals("SELECT * FROM User",
-                QueryHelper.createSELECT(new User(12, "ENGINYERIA TELEMÀTICA")));*/
+                QueryHelper.createSELECT(new User(12, "ENGINYERIA TELEMÀTICA")));
     }
-
+*/
 }

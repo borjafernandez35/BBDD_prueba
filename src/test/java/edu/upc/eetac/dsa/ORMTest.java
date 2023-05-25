@@ -21,6 +21,11 @@ public class ORMTest {
     public void getLoginTest(){
 //      Assert.assertTrue(userDAO.login("Borja@gmail.com", "478356"));
         Assert.assertTrue(userDAO.login("Borja@gmail.com", "12345"));
+        IUserDAO userDAO = new UserDAOImpl();
+        User user5 = userDAO.getUser(1);
+        Assert.assertEquals("jose@gmail.com", user5.getEmail());
+        User user2 = userDAO.getUser(2);
+        Assert.assertEquals("jose2@gmail.com", user2.getEmail());
     }
 
     @Test
@@ -28,6 +33,9 @@ public class ORMTest {
 
         User user5 = userDAO.getUserByEmail("Borja@gmail.com");
         Assert.assertEquals("Cristian", user5.getName());
+        IUserDAO userDAO = new UserDAOImpl();
+        User user3 = userDAO.getUserByEmail("jose2@gmail.com");
+        Assert.assertEquals("Jose", user3.getName());
     }
 
     public void getGameObjectTest() {
