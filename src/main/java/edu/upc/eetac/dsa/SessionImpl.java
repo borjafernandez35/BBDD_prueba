@@ -7,6 +7,7 @@ import edu.upc.eetac.dsa.util.QueryHelper;
 import java.beans.IntrospectionException;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class SessionImpl implements Session {
                 }
 
 
-                System.out.println(rs.getObject(1));
+                /*System.out.println(rs.getObject(1));
                 System.out.println(rs.getObject(2));
                 System.out.println(rs.getObject(3));
                 System.out.println(rs.getObject(4));
@@ -97,7 +98,7 @@ public class SessionImpl implements Session {
                 System.out.println(rsmd.getColumnType(1));
                 System.out.println(rsmd.getColumnType(2));
                 System.out.println(rsmd.getColumnType(3));
-                System.out.println(rsmd.getColumnType(4));
+                System.out.println(rsmd.getColumnType(4));*/
 
                 return entity;
 
@@ -121,6 +122,30 @@ public class SessionImpl implements Session {
     }
 
     public void update(Object object) {
+        String insertQuery = QueryHelper.createQueryUPDATE(object);
+        User u= (User) object;
+
+        PreparedStatement pstm = null;
+
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+
+
+                String field;
+                int i =1;
+                while (i<ObjectHelper.getFields(object).length){
+                    field = ObjectHelper.getFields(object)[i];
+                    pstm.setObject(i++, ObjectHelper.getter(object, field));
+                }
+                pstm.setObject(i++, ObjectHelper.getter(object, ObjectHelper.getFields(object)[0]));
+                pstm.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
@@ -182,47 +207,179 @@ public class SessionImpl implements Session {
 
         return list;
     }
+    public List<Object> find(Class theClass, String pk) {
 
-    public List<Object> findAll(Class theClass, HashMap params) {
-        /*Object entity = theClass.newInstance();
-        String selectQuery = QueryHelper.createSELECT(entity);
-
-        PreparedStatement pstm = null;
-        ResultSet rs= null;
-
+        List list= new LinkedList();
         try {
+            Object entity = theClass.newInstance();
+            String selectQuery = QueryHelper.createQuerySELECT(entity, pk);
+
+            PreparedStatement pstm = null;
+            ResultSet rs= null;
+
+
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setObject(1, value);
+
+//            pstm.setObject(1, entity);
 
             rs=pstm.executeQuery();
             ResultSetMetaData rsmd  = rs.getMetaData();
 
             if (rs.next()){
+                entity = theClass.newInstance();
 
                 int k= rsmd.getColumnCount();
-
-                for(int v=1; v<=k; v++){
-
-                    ObjectHelper.setter(entity, rsmd.getColumnName(v), rs.getObject(v) );
-
-
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++) {
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                    //  ObjectHelpter.setter(entity, pk, value);
+                    ObjectHelper.setter(entity, columnName, valueRow);
                 }
+                list.add(entity);
 
 
-
-                return null;
-
-                // ObjectHelper.setter(entity,pk, value );
             }
 
-        }  catch (SQLException | IntrospectionException   e) {
-            e.printStackTrace();
-        }*/
+            //return entity;
 
-        return null;
+            //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+            //  ObjectHelper.setter(entity,"email" ,"a");
+            // ObjectHelper.setter(entity,"password" ,"a");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            throw new RuntimeException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        return list;
+    }
+
+    public List<Object> findAll(Class theClass, HashMap params) {
+        List list= new LinkedList();
+         try {
+             int i=1;
+             int b=2;
+             /*String clave=null;
+             String clave1=null;*/
+            Object entity = theClass.newInstance();
+            Iterator<String[]> iterator= params.keySet().iterator();
+
+
+           /* while(iterator.hasNext()) {
+                clave=iterator.next();
+                clave1=iterator.next();
+                }*/
+            // String selectQuery=QueryHelper.createQuerySELECT1(entity, clave,clave1);
+             String selectQuery=QueryHelper.createQuerySELECT2(entity, params);
+
+            PreparedStatement pstm = null;
+            ResultSet rs= null;
+            pstm = conn.prepareStatement(selectQuery);
+          pstm.setObject(1, params.get(iterator.next()));
+          while(i<params.size()) {
+              pstm.setObject(b, params.get(iterator.next()));
+              i++;
+              b++;
+          }
+
+
+            rs=pstm.executeQuery();
+            ResultSetMetaData rsmd  = rs.getMetaData();
+            while (rs.next()){
+                entity = theClass.newInstance();
+                int k= rsmd.getColumnCount();
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++) {
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                    //  ObjectHelpter.setter(entity, pk, value);
+                    ObjectHelper.setter(entity, columnName, valueRow);
+                }
+                list.add(entity);
+
+
+            }
+
+            //return entity;
+
+            //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+            //  ObjectHelper.setter(entity,"email" ,"a");
+            // ObjectHelper.setter(entity,"password" ,"a");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            throw new RuntimeException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+         return list;
     }
 
     public List<Object> query(String query, Class theClass, HashMap params) {
-        return null;
+        List list= new LinkedList();
+        try {
+            String[]clave=null;
+            Object entity = theClass.newInstance();
+            Iterator<String[]> iterator= params.keySet().iterator();
+            while(iterator.hasNext()) {
+                clave=iterator.next();
+            }
+            String selectQuery=QueryHelper.createQuerySELECT2(entity, params);
+
+            PreparedStatement pstm = null;
+            ResultSet rs= null;
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, params.get(clave[0]));
+            pstm.setObject(2, params.get(clave[1]));
+            rs=pstm.executeQuery();
+            ResultSetMetaData rsmd  = rs.getMetaData();
+            while (rs.next()){
+                entity = theClass.newInstance();
+                int k= rsmd.getColumnCount();
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++) {
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                    //  ObjectHelpter.setter(entity, pk, value);
+                    ObjectHelper.setter(entity, columnName, valueRow);
+                }
+                list.add(entity);
+
+
+            }
+
+            //return entity;
+
+            //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+            //  ObjectHelper.setter(entity,"email" ,"a");
+            // ObjectHelper.setter(entity,"password" ,"a");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            throw new RuntimeException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        return list;
     }
 }

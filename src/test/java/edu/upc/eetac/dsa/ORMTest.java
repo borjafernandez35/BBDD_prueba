@@ -4,11 +4,14 @@ import edu.upc.eetac.dsa.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 
+
 import java.util.List;
+import java.util.HashMap;
 
 public class ORMTest {
 
     IUserDAO userDAO = new UserDAOImpl();
+
     @Test
     public void getUserTest() {
 
@@ -17,8 +20,9 @@ public class ORMTest {
         User user2 = userDAO.getUser(76);
         Assert.assertEquals("Javi", user2.getEmail());
     }
+
     @Test
-    public void getLoginTest(){
+    public void getLoginTest() {
 //      Assert.assertTrue(userDAO.login("Borja@gmail.com", "478356"));
         Assert.assertTrue(userDAO.login("Borja@gmail.com", "12345"));
         IUserDAO userDAO = new UserDAOImpl();
@@ -43,9 +47,10 @@ public class ORMTest {
         //GameObject user5 = gameDAO.getGameObject(61);
         //Assert.assertEquals("Cristian", user5.getName());
     }
+
     @Test
     public void getObjectsTest() {
-        UserDAOImpl shopDAO = new UserDAOImpl ();
+        UserDAOImpl shopDAO = new UserDAOImpl();
         List list = shopDAO.getAll();
         // select * from object
 
@@ -55,6 +60,29 @@ public class ORMTest {
         List<Object> list = shopDAO.getObject();
         // select * from object
     }*/
+
+    public void getObjectTest2() {
+        UserDAOImpl userDao = new UserDAOImpl();
+        String a;
+    }
+
+    @Test
+    public void getObjectsTest3() {
+        UserDAOImpl shopDAO = new UserDAOImpl();
+        String category = "CAT1";
+        boolean enabled = true;
+
+        HashMap<String, Object> params = new HashMap<>();
+
+
+        params.put("email", "borja@gmail.com");
+        params.put("name", "Borja");
+         params.put("password", "478356");
+
+
+        List<Object> list = shopDAO.inventario(params);
+        // Select * from object WHERE categoria = "CAT1" AND state = "true" AND x = b AND y=x AND
+    }
 
     /*
     public void getObjectsTest3() {
@@ -70,4 +98,22 @@ public class ORMTest {
         // Select * from object WHERE categoria = "CAT1" AND state = "true" AND x = b AND y=x AND
     }
 */
+    @Test
+    public void testusuario() {
+        if (userDAO.size() == 0) {
+           // userDAO.addUser("Juan", "Juan@gmail.com", "12345");
+            userDAO.addUser("jorge", "jorge@gmail.com", "23456");
+           /* userDAO.addUser("Javi", "Javi@gmail.com", "56789");
+            userDAO.addUser("Nil", "Nil@gmail.com", "283445");
+            userDAO.addUser("Jose", "Jose@gmail.com", "109345");
+            userDAO.addUser("Cristian", "Cristian@gmail.com", "109456");
+            userDAO.addUser("Borja", "Borja@gmail.com", "478356");*/
+        }
+    }
+    @Test
+    public void testUsuario1(){
+        userDAO.updateUser( "Toni","Borja@gmail.com","soyyo");
+        userDAO.updateUser( "Antonio","Javi@gmail.com","123456");
+        userDAO.updateUser( "Pepe","Jose@gmail.com","Hola");
+    }
 }

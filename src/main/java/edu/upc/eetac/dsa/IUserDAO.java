@@ -3,6 +3,7 @@ package edu.upc.eetac.dsa;
 import edu.upc.eetac.dsa.model.Employee;
 import edu.upc.eetac.dsa.model.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IUserDAO {
@@ -21,6 +22,9 @@ public interface IUserDAO {
     public List<Employee> getEmployees();
     public List <Employee> getEmployeeByDept(int deptId);
     public List<Object> getAll();
+    public List<Object> inventario(HashMap params);
 
     User getUserByEmail(String s);
+    public List<Object> findOut(String Object);
+    public void updateUser(String name, String email, String password);
 }

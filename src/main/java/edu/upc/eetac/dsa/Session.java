@@ -16,4 +16,5 @@ public interface Session<E> {
     List<Object> findAll(Class theClass);
     List<Object> findAll(Class theClass, HashMap params);
     List<Object> query(String query, Class theClass, HashMap params);
+    public List<Object> find(Class theClass, String pk);
 }

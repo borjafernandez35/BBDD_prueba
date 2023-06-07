@@ -3,14 +3,14 @@ package edu.upc.eetac.dsa.model;
 import java.util.Objects;
 
 public class User {
-
-   private int id;
+    private int id;
 
   private  String name;
 
    private String email;
 
   private  String password;
+
 
 
 
@@ -31,9 +31,12 @@ public class User {
     }
 
     public User(){}
-    public User(String email, String password){
+    public User(int id, String name,String email, String password){
+        this.id=id;
+        this.name=name;
         this.email=email;
         this.password=password;
+
 
     }
     public User(String name, String email, String password) {

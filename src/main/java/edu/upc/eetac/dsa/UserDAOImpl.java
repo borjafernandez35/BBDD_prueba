@@ -156,6 +156,25 @@ public class UserDAOImpl implements IUserDAO {
 
         return user;
     }
+    public List<Object> inventario(HashMap params){
+        Session session = null;
+        List listUser = new LinkedList();
+        try {
+            session = FactorySession.openSession();
+            listUser =  session.findAll(User.class, params);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        System.out.println(listUser);
+
+
+        return listUser;
+
+    }
 
     public List<Object> getAll() {
         Session session = null;
@@ -174,6 +193,45 @@ public class UserDAOImpl implements IUserDAO {
 
 
         return listUser;
+    }
+    public List<Object> findOut(String object) {
+        Session session = null;
+        List listUser = new LinkedList();
+        try {
+            session = FactorySession.openSession();
+            listUser =  session.find(User.class, object);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        System.out.println(listUser);
+
+
+        return listUser;
+    }
+    public void updateUser( String name, String email, String password){
+        int id=0;
+        User us = new User(id,name,email,password);
+        User u = null;
+
+        Session session = null;
+        try {
+            session = FactorySession.openSession();
+            u=getUserByEmail(email);
+            if(u.getEmail().equals(email)) {
+                us.setId(u.getId());
+                session.update(us);
+            }
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
     }
 
 
@@ -272,6 +330,7 @@ public class UserDAOImpl implements IUserDAO {
         return user;
 
     }
+
 
 
 
