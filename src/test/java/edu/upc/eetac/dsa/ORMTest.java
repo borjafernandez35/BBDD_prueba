@@ -112,8 +112,9 @@ public class ORMTest {
     }
     @Test
     public void testUsuario1(){
-        userDAO.updateUser( "Toni","Borja@gmail.com","soyyo");
-        userDAO.updateUser( "Antonio","Javi@gmail.com","123456");
-        userDAO.updateUser( "Pepe","Jose@gmail.com","Hola");
+        userDAO.updateUser( "Amigo","Borja@gmail.com","betico", 500);
+        userDAO.updateUser( "Joaquin","Javi@gmail.com","123456", 420);
+        userDAO.updateUser( "Juan","Jose@gmail.com","Hola", 320);
+        userDAO.updateUser( "Toni","Nil@gmail.com","Tabla", 121.12);
     }
 }

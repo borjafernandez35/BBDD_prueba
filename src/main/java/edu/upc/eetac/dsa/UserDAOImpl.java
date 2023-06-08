@@ -212,9 +212,9 @@ public class UserDAOImpl implements IUserDAO {
 
         return listUser;
     }
-    public void updateUser( String name, String email, String password){
+    public void updateUser( String name, String email, String password, double dsaCoins){
         int id=0;
-        User us = new User(id,name,email,password);
+        User us = new User(id,name,email,password,dsaCoins);
         User u = null;
 
         Session session = null;

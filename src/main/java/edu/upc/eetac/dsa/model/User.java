@@ -1,5 +1,6 @@
 package edu.upc.eetac.dsa.model;
 
+
 import java.util.Objects;
 
 public class User {
@@ -10,9 +11,15 @@ public class User {
    private String email;
 
   private  String password;
+   private Double dsaCoins= 500.0;
 
+    public Double getDsaCoins() {
+        return dsaCoins;
+    }
 
-
+    public void setDsaCoins(Double dsaCoins) {
+        this.dsaCoins = dsaCoins;
+    }
 
     public String getEmail() {
         return email;
@@ -31,11 +38,13 @@ public class User {
     }
 
     public User(){}
-    public User(int id, String name,String email, String password){
+    public User(int id, String name,String email, String password, double dsaCoins){
         this.id=id;
         this.name=name;
         this.email=email;
         this.password=password;
+        this.dsaCoins=dsaCoins;
+
 
 
     }
@@ -45,6 +54,7 @@ public class User {
         this.name = name;
         this.email=email;
         this.password=password;
+        double dsaCoins=500;
 
     }
 

@@ -26,5 +26,5 @@ public interface IUserDAO {
 
     User getUserByEmail(String s);
     public List<Object> findOut(String Object);
-    public void updateUser(String name, String email, String password);
+    public void updateUser( String name, String email, String password, double dsaCoins);
 }
