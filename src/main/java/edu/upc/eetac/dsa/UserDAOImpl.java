@@ -22,13 +22,13 @@ public class UserDAOImpl implements IUserDAO {
         return instance;
     }
 
-    public int addUser ( String name, String email, String password){
+    public int addUser ( String name, String email, String password, String photo){
 
         Session session = null;
         int userID = 0;
         try {
             session = FactorySession.openSession();
-            User u = new User(name, email, password);
+            User u = new User(name, email, password, photo);
             session.save(u);
         }
         catch (Exception e) {
@@ -48,7 +48,9 @@ public class UserDAOImpl implements IUserDAO {
         try {
             session = FactorySession.openSession();
             usuario= getUserByEmail(email);
-            if (usuario.getEmail().equals(email)&(usuario.getPassword().equals(password))){
+//            Object o= new User(password);
+            String p= session.getpassword(password);
+            if (usuario.getEmail().equals(email)&(usuario.getPassword().equals(p))){
                 return true;
             }
             return false;
@@ -212,9 +214,9 @@ public class UserDAOImpl implements IUserDAO {
 
         return listUser;
     }
-    public void updateUser( String name, String email, String password, double dsaCoins){
+    public void updateUser( String name, String email, String password, double dsaCoins, String photo){
         int id=0;
-        User us = new User(id,name,email,password,dsaCoins);
+        User us = new User(id,name,email,password,dsaCoins, photo);
         User u = null;
 
         Session session = null;
@@ -255,8 +257,8 @@ public class UserDAOImpl implements IUserDAO {
     }
 
 
-    public void deleteEmployee(int employeeID) {
-        Employee employee = this.getEmployee(employeeID);
+    public void deleteEmployee(int employeeID) {}
+       /* Employee employee = this.getEmployee(employeeID);
         Session session = null;
         try {
             session = FactorySession.openSession();
@@ -269,7 +271,7 @@ public class UserDAOImpl implements IUserDAO {
             session.close();
         }
 
-    }
+    }*/
 
 
     public List<Employee> getEmployees() {

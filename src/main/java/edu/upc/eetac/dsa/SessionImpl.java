@@ -48,6 +48,12 @@ public class SessionImpl implements Session {
     }
 
     public void close() {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
     }
     public Object get(Class theClass, int ID) throws InstantiationException, IllegalAccessException {
@@ -78,13 +84,14 @@ public class SessionImpl implements Session {
                     columnName = rsmd.getColumnName(v);
                     valueRow = rs.getObject(v);
                   //  ObjectHelper.setter(entity, pk, value);
+
                     ObjectHelper.setter(entity, columnName, valueRow);
 
 
                 }
 
 
-                /*System.out.println(rs.getObject(1));
+               /* System.out.println(rs.getObject(1));
                 System.out.println(rs.getObject(2));
                 System.out.println(rs.getObject(3));
                 System.out.println(rs.getObject(4));
@@ -98,8 +105,8 @@ public class SessionImpl implements Session {
                 System.out.println(rsmd.getColumnType(1));
                 System.out.println(rsmd.getColumnType(2));
                 System.out.println(rsmd.getColumnType(3));
-                System.out.println(rsmd.getColumnType(4));*/
-
+                System.out.println(rsmd.getColumnType(4));
+*/
                 return entity;
 
 
@@ -123,7 +130,6 @@ public class SessionImpl implements Session {
 
     public void update(Object object) {
         String insertQuery = QueryHelper.createQueryUPDATE(object);
-        User u= (User) object;
 
         PreparedStatement pstm = null;
 
@@ -137,6 +143,7 @@ public class SessionImpl implements Session {
                 while (i<ObjectHelper.getFields(object).length){
                     field = ObjectHelper.getFields(object)[i];
                     pstm.setObject(i++, ObjectHelper.getter(object, field));
+
                 }
                 pstm.setObject(i++, ObjectHelper.getter(object, ObjectHelper.getFields(object)[0]));
                 pstm.executeQuery();
@@ -148,10 +155,92 @@ public class SessionImpl implements Session {
 
 
     }
+    public String getpassword(String p) {
+        String insertQuery = QueryHelper.createPASSWORD();
 
-    public void delete(Object object) {
+        PreparedStatement pstm = null;
+        ResultSet rs=null;
+        String password=null;
+       try {
+            pstm = conn.prepareStatement(insertQuery);
+//            pstm.setObject(3,value);
+            pstm.setString(1, p);
+
+           rs= pstm.executeQuery();
+           if(rs.next())
+          password=rs.getObject(1).toString();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return password;
+
+
 
     }
+
+    public void delete(Object object, String pk) {
+        /*String deleteQuery = QueryHelper.createQueryDELETE(object, pk);
+
+        PreparedStatement pstm = null;
+        ResultSet rs= null;
+
+        try {
+            pstm = conn.prepareStatement(deleteQuery);
+            pstm.setObject(1, object);
+
+            rs=pstm.executeQuery();
+            ResultSetMetaData rsmd  = rs.getMetaData();
+
+            if (rs.next()){
+
+                int k= rsmd.getColumnCount();
+                String columnName;
+                Object valueRow=null;
+                for(int v=1; v <= k; v++){
+                    columnName = rsmd.getColumnName(v);
+                    valueRow = rs.getObject(v);
+                    //  ObjectHelper.setter(entity, pk, value);
+                    ObjectHelper.setter(object, columnName, valueRow);
+
+
+                }
+
+
+                *//*System.out.println(rs.getObject(1));
+                System.out.println(rs.getObject(2));
+                System.out.println(rs.getObject(3));
+                System.out.println(rs.getObject(4));
+
+                System.out.println(rsmd.getColumnCount());
+                System.out.println(rsmd.getColumnName(1));
+                System.out.println(rsmd.getColumnName(2));
+                System.out.println(rsmd.getColumnName(3));
+                System.out.println(rsmd.getColumnName(4));
+
+                System.out.println(rsmd.getColumnType(1));
+                System.out.println(rsmd.getColumnType(2));
+                System.out.println(rsmd.getColumnType(3));
+                System.out.println(rsmd.getColumnType(4));*//*
+
+
+
+
+                //  ObjectHelper.setter(entity,rsmd.getColumnName(v),rs.getObject(v));
+                //  ObjectHelper.setter(entity,"email" ,"a");
+                // ObjectHelper.setter(entity,"password" ,"a");
+
+            }
+
+        }  catch (SQLException | IntrospectionException   e) {
+            e.printStackTrace();
+        }*/
+
+
+
+    }
+
+
 
     public List<Object> findAll(Class theClass) {
 
@@ -271,21 +360,30 @@ public class SessionImpl implements Session {
              String clave1=null;*/
             Object entity = theClass.newInstance();
             Iterator<String[]> iterator= params.keySet().iterator();
+            String s= null;
+            String password=null;
+            int c=0;
+            while(c< params.size()){
+                if(params.containsKey("password")){
+                s= params.get(iterator.next()).toString();
+                password=getpassword(s);
+                params.remove("password");
+                params.put("password",password);
+                c= params.size();
+                }else {
+                    c++;
+                }
+            }
 
-
-           /* while(iterator.hasNext()) {
-                clave=iterator.next();
-                clave1=iterator.next();
-                }*/
-            // String selectQuery=QueryHelper.createQuerySELECT1(entity, clave,clave1);
+             Iterator<String[]> iterator1= params.keySet().iterator();
              String selectQuery=QueryHelper.createQuerySELECT2(entity, params);
 
             PreparedStatement pstm = null;
             ResultSet rs= null;
             pstm = conn.prepareStatement(selectQuery);
-          pstm.setObject(1, params.get(iterator.next()));
+          pstm.setObject(1, params.get(iterator1.next()));
           while(i<params.size()) {
-              pstm.setObject(b, params.get(iterator.next()));
+              pstm.setObject(b, params.get(iterator1.next()));
               i++;
               b++;
           }

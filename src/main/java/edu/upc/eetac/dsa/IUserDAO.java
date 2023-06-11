@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IUserDAO {
 
-    public int addUser ( String name, String email, String password );
+    public int addUser (String name, String email, String password, String s);
 
     public boolean login (String email, String password);
 
@@ -26,5 +26,5 @@ public interface IUserDAO {
 
     User getUserByEmail(String s);
     public List<Object> findOut(String Object);
-    public void updateUser( String name, String email, String password, double dsaCoins);
+    public void updateUser( String name, String email, String password, double dsaCoins, String photo);
 }

@@ -12,9 +12,10 @@ public interface Session<E> {
     Object get(Class theClass, String pk, Object value) throws InstantiationException, IllegalAccessException;
     User getPorEmail(User user, String email);
     void update(Object object);
-    void delete(Object object);
+    void delete(Object object, String pk);
     List<Object> findAll(Class theClass);
     List<Object> findAll(Class theClass, HashMap params);
     List<Object> query(String query, Class theClass, HashMap params);
     public List<Object> find(Class theClass, String pk);
+    public String getpassword(String password);
 }

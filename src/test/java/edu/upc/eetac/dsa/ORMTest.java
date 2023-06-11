@@ -24,7 +24,7 @@ public class ORMTest {
     @Test
     public void getLoginTest() {
 //      Assert.assertTrue(userDAO.login("Borja@gmail.com", "478356"));
-        Assert.assertTrue(userDAO.login("Borja@gmail.com", "12345"));
+        Assert.assertTrue(userDAO.login("Isma@gmail.com", "23456"));
         IUserDAO userDAO = new UserDAOImpl();
         User user5 = userDAO.getUser(1);
         Assert.assertEquals("jose@gmail.com", user5.getEmail());
@@ -42,7 +42,7 @@ public class ORMTest {
         Assert.assertEquals("Jose", user3.getName());
     }
 
-    public void getGameObjectTest() {
+ /*   public void getGameObjectTest() {
         IUserDAO userDAO = new UserDAOImpl();
         //GameObject user5 = gameDAO.getGameObject(61);
         //Assert.assertEquals("Cristian", user5.getName());
@@ -55,16 +55,16 @@ public class ORMTest {
         // select * from object
 
     }
-   /* public void getObjectsTest() {
+   *//* public void getObjectsTest() {
         IShopDAO shopDAO = new ShopDAOImpl();
         List<Object> list = shopDAO.getObject();
         // select * from object
-    }*/
+    }*//*
 
     public void getObjectTest2() {
         UserDAOImpl userDao = new UserDAOImpl();
         String a;
-    }
+    }*/
 
     @Test
     public void getObjectsTest3() {
@@ -77,7 +77,7 @@ public class ORMTest {
 
         params.put("email", "borja@gmail.com");
         params.put("name", "Borja");
-         params.put("password", "478356");
+        params.put("password", "betico");
 
 
         List<Object> list = shopDAO.inventario(params);
@@ -102,7 +102,7 @@ public class ORMTest {
     public void testusuario() {
         if (userDAO.size() == 0) {
            // userDAO.addUser("Juan", "Juan@gmail.com", "12345");
-            userDAO.addUser("jorge", "jorge@gmail.com", "23456");
+            userDAO.addUser("Manolo", "Manuel@gmail.com", "23456","vaya");
            /* userDAO.addUser("Javi", "Javi@gmail.com", "56789");
             userDAO.addUser("Nil", "Nil@gmail.com", "283445");
             userDAO.addUser("Jose", "Jose@gmail.com", "109345");
@@ -112,9 +112,9 @@ public class ORMTest {
     }
     @Test
     public void testUsuario1(){
-        userDAO.updateUser( "Amigo","Borja@gmail.com","betico", 500);
-        userDAO.updateUser( "Joaquin","Javi@gmail.com","123456", 420);
+        userDAO.updateUser( "Borja","Borja@gmail.com","betico", 1907, "BetisOE");
+        /*userDAO.updateUser( "Joaquin","Javi@gmail.com","123456", 420);
         userDAO.updateUser( "Juan","Jose@gmail.com","Hola", 320);
-        userDAO.updateUser( "Toni","Nil@gmail.com","Tabla", 121.12);
+        userDAO.updateUser( "Toni","Nil@gmail.com","Tabla", 121.12);*/
     }
 }

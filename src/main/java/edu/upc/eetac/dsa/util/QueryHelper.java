@@ -25,9 +25,11 @@ public class QueryHelper {
         sb.append(") VALUES (?");
 
         for (String field : fields) {
-          if (!field.contains("id")) {
+          if (!field.contains("id")&!field.contains("password")) {
                 sb.append(", ?");
-           }
+           }else if(field.contains("password")){
+              sb.append(", PASSWORD(?)");
+          }
         }
 
         sb.append(")");
@@ -36,8 +38,18 @@ public class QueryHelper {
     }
 
     public static String createQuerySELECT(Object entity, String pk) {
+        String password="password";
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+
+        sb.append(" WHERE " + pk + " = ?");
+
+
+        return sb.toString();
+    }
+    public static String createQueryDELETE(Object entity, String pk) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE  FROM ").append(entity.getClass().getSimpleName());
         sb.append(" WHERE "+pk+" = ?");
 
         return sb.toString();
@@ -46,6 +58,12 @@ public class QueryHelper {
     public static String createSELECT(Object entity) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+        return sb.toString();
+
+    }
+    public static String createPASSWORD() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT PASSWORD (?)");
         return sb.toString();
 
     }
@@ -84,9 +102,18 @@ public class QueryHelper {
         while (i<fields.length){
             field = fields[i];
 
-            if (i>1)
+            if (i>1&!field.contains("password")&!field.contains("dsaCoins")) {
+
                 sb.append(" = ?, ");
-            sb.append(field);
+                sb.append(field);
+            }else if(field.contains("password")){
+                sb.append(" = ?, ");
+                sb.append(field);
+                sb.append(" = PASSWORD(?), ");
+            }else if(i==1||field.contains("dsaCoins")){
+                sb.append(field);
+            }
+
             i++;
         }
         sb.append(" = ?");

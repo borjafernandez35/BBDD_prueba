@@ -11,7 +11,8 @@ public class User {
    private String email;
 
   private  String password;
-   private Double dsaCoins= 500.0;
+   private Double dsaCoins=500.0;
+   private String photo;
 
     public Double getDsaCoins() {
         return dsaCoins;
@@ -38,23 +39,43 @@ public class User {
     }
 
     public User(){}
-    public User(int id, String name,String email, String password, double dsaCoins){
+    public User(int id, String name,String email, String password, double dsaCoins, String photo){
         this.id=id;
         this.name=name;
         this.email=email;
         this.password=password;
         this.dsaCoins=dsaCoins;
+        this.photo=photo;
 
 
 
     }
-    public User(String name, String email, String password) {
+    public User( String password){
+
+
+        this.password=password;
+
+
+
+
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public User(String name, String email, String password, String photo) {
         /*IEmployeeDAO id = EmployeeDAOImpl.getInstance();
         this.id = id.addUser(name, email, password);*/
         this.name = name;
         this.email=email;
         this.password=password;
-        double dsaCoins=500;
+        this.photo=photo;
+
 
     }
 
